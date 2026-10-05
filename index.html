@@ -118,22 +118,21 @@
   </main>
 
   <script>
-    const form = document.getElementById("searchForm");
-    const input = document.getElementById("searchInput");
-    const message = document.getElementById("message");
+<script>
+  const form = document.getElementById("searchForm");
+  const input = document.getElementById("searchInput");
+  const message = document.getElementById("message");
 
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
 
-      const query = input.value.trim();
+    const query = input.value.trim();
+    if (!query) return;
 
-      if (!query) return;
-
-      message.textContent =
-        'Search is ready for the next step. You searched for: "' +
-        query +
-        '"';
-    });
+    window.location.href =
+      "https://www.google.com/search?q=" + encodeURIComponent(query);
+  });
+</script>
   </script>
 
 </body>
