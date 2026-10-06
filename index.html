@@ -1,75 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OnlyLinkSearch — Just search. Just links. No AI.</title>
-  <meta name="description" content="OnlyLinkSearch is a search engine built to send you to the source. No AI-generated answers. No chatbot. Just links.">
-  <meta property="og:title" content="OnlyLinkSearch">
-  <meta property="og:description" content="Just search. Just links. No AI.">
-  <meta property="og:type" content="website">
-  <meta name="theme-color" content="#ffffff">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnlyLinkSearch</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff; color: #111111; }
+    .home { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding-top: 20vh; }
+    h1 { font-size: 52px; margin: 0 0 8px; letter-spacing: -2px; }
+    .tagline { color: #666; margin-bottom: 30px; font-size: 16px; }
+    .search-box { width: min(620px, 90%); display: flex; gap: 10px; }
+    input { flex: 1; height: 52px; border: 1px solid #bbb; border-radius: 10px; padding: 0 18px; font-size: 17px; outline: none; }
+    input:focus { border-color: #333; }
+    button { height: 52px; padding: 0 24px; border: 0; border-radius: 10px; background: #111; color: white; font-size: 16px; cursor: pointer; }
+    .message { width: min(620px, 90%); margin-top: 25px; color: #666; line-height: 1.5; }
+    .footer { margin-top: auto; padding: 30px; color: #999; font-size: 13px; }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="OnlyLinkSearch home">
-      <img src="logo.svg" alt="" class="brand-mark">
-      <span>OnlyLinkSearch</span>
-    </a>
-    <a class="small-link" href="#early-access">Early Access</a>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="hero-inner">
-        <p class="eyebrow">THE WEB. NOT A GENERATED ANSWER.</p>
-        <h1>Just search.<br>Just links.<br><span>No AI.</span></h1>
-        <p class="hero-copy">
-          Remember when searching the internet actually gave you the internet?
-          OnlyLinkSearch is being built to send you directly to websites, sources,
-          creators, forums, articles and communities.
-        </p>
-
-        <form class="search-demo" id="site-search" role="search">
-          <label for="site-query" class="sr-only">Search the starter collection</label>
-          <input id="site-query" name="q" type="search" placeholder="Search 100 websites…" maxlength="200" required>
-          <button type="submit" aria-label="Search">⌕</button>
-        </form>
-        <p class="microcopy">Search names, descriptions and topics in our 100-site starter collection.</p>
-        <noscript><p>Enable JavaScript to search this collection.</p></noscript>
-        <div id="search-output" hidden>
-          <p id="search-status" role="status" aria-live="polite"></p>
-          <ul id="search-results" aria-label="Website search results"></ul>
-          <button id="more-results" class="primary-button" type="button" hidden>Show more</button>
-        </div>
-
-        <a class="primary-button" href="#early-access">Join Early Access</a>
-        <p class="microcopy">No spam. Just launch updates and access when it’s ready.</p>
+  <main class="home">
+    <h1>OnlyLink</h1>
+    <div class="tagline">Just search. Just links. No AI.</div>
+    <form class="search-box" id="searchForm">
+      <input id="searchInput" type="search" placeholder="Search the web" autocomplete="off" required>
+      <button type="submit">Search</button>
+    </form>
+    <div class="message" id="message">
+      <div id="search-output" hidden>
+        <p id="search-status" role="status" aria-live="polite"></p>
+        <div id="search-results" aria-label="Website search results"></div>
+        <button id="more-results" type="button" hidden>Show more</button>
       </div>
-    </section>
-
-    <section class="statement section">
-      <div class="section-inner narrow">
-        <p class="section-kicker">WHY</p>
-        <h2>The internet should be more than one generated answer.</h2>
-        <p>
-          Search engines used to help you find information. Increasingly, they try to
-          answer for you. OnlyLinkSearch is being built differently.
-        </p>
-        <div class="three-beats">
-          <div><strong>You search.</strong></div>
-          <div><strong>We show links.</strong></div>
-          <div><strong>You decide.</strong></div>
-        </div>
-      </div>
-    </section>
+    </div>
+    <div class="footer">OnlyLinkSearch</div>
+  </main>
 
   <script>
     (() => {
-      const form = document.getElementById('site-search');
-      const input = document.getElementById('site-query');
+      const form = document.getElementById('searchForm');
+      const input = document.getElementById('searchInput');
       const output = document.getElementById('search-output');
       const status = document.getElementById('search-status');
       const results = document.getElementById('search-results');
@@ -103,10 +73,13 @@
             try { url = new URL(item.url); } catch { continue; }
             if (!['https:', 'http:'].includes(url.protocol) || seen.has(url.href)) continue;
             seen.add(url.href);
-            const row = document.createElement('li');
+            const row = document.createElement('div');
             const link = document.createElement('a');
             link.href = url.href;
             link.textContent = item.title || url.hostname;
+            row.style.marginBottom = '24px';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
             row.append(link);
             if (item.description) {
               const description = document.createElement('p');
@@ -129,6 +102,5 @@
       more.addEventListener('click', () => search(false));
     })();
   </script>
-  </main>
 </body>
 </html>
