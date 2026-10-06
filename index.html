@@ -117,23 +117,108 @@
 
   </main>
 
-  <script>
 <script>
-  const form = document.getElementById("searchForm");
-  const input = document.getElementById("searchInput");
-  const message = document.getElementById("message");
+const form = document.getElementById("searchForm");
+const input = document.getElementById("searchInput");
+const message = document.getElementById("message");
 
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();
+let currentQuery = "";
+let currentPage = 0;
 
-    const query = input.value.trim();
-    if (!query) return;
+async function runSearch(query, page = 0, append = false) {
+  if (!append) {
+    message.textContent = "Searching...";
+  }
 
-    window.location.href =
-      "https://www.google.com/search?q=" + encodeURIComponent(query);
-  });
+  try {
+    const response = await fetch(
+      `/api/search?q=${encodeURIComponent(query)}&page=${page}`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Search failed");
+    }
+
+    if (!append) {
+      message.innerHTML = "";
+    }
+
+    if (!data.results || data.results.length === 0) {
+      message.textContent = "No results found.";
+      return;
+    }
+
+    const resultsWrap = document.createElement("div");
+
+    data.results.forEach(result => {
+      const item = document.createElement("div");
+      item.style.marginBottom = "24px";
+
+      const link = document.createElement("a");
+      link.href = result.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = result.title;
+
+      const url = document.createElement("div");
+      url.textContent = result.url;
+      url.style.fontSize = "13px";
+      url.style.opacity = "0.65";
+      url.style.wordBreak = "break-all";
+
+      const description = document.createElement("div");
+      description.textContent = result.description;
+      description.style.marginTop = "6px";
+
+      item.appendChild(link);
+      item.appendChild(url);
+      item.appendChild(description);
+
+      resultsWrap.appendChild(item);
+    });
+
+    message.appendChild(resultsWrap);
+
+    const oldButton = document.getElementById("loadMore");
+    if (oldButton) oldButton.remove();
+
+    if (data.moreResultsAvailable) {
+      const moreButton = document.createElement("button");
+      moreButton.id = "loadMore";
+      moreButton.type = "button";
+      moreButton.textContent = "Show more";
+
+      moreButton.addEventListener("click", async () => {
+        currentPage++;
+        moreButton.remove();
+        await runSearch(currentQuery, currentPage, true);
+      });
+
+      message.appendChild(moreButton);
+    }
+
+  } catch (error) {
+    message.textContent = "Search unavailable. Please try again.";
+    console.error(error);
+  }
+}
+
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const query = input.value.trim();
+  if (!query) return;
+
+  currentQuery = query;
+  currentPage = 0;
+
+  await runSearch(query);
+});
 </script>
-  
+
+
 
 </body>
 </html>
