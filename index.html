@@ -65,3 +65,70 @@
         </div>
       </div>
     </section>
+
+  <script>
+    (() => {
+      const form = document.getElementById('site-search');
+      const input = document.getElementById('site-query');
+      const output = document.getElementById('search-output');
+      const status = document.getElementById('search-status');
+      const results = document.getElementById('search-results');
+      const more = document.getElementById('more-results');
+      let query = '', nextPage = 0, controller, busy = false;
+      const seen = new Set();
+      async function search(reset) {
+        if (!reset && busy) return;
+        if (reset) {
+          const value = input.value.trim();
+          if (!value) return;
+          controller?.abort();
+          query = value;
+          nextPage = 0;
+          seen.clear();
+          results.replaceChildren();
+          more.hidden = true;
+        }
+        const request = new AbortController();
+        controller = request;
+        busy = true;
+        more.disabled = true;
+        output.hidden = false;
+        status.textContent = 'Searching…';
+        try {
+          const response = await fetch('/api/search?' + new URLSearchParams({ q: query, page: nextPage }), { signal: request.signal });
+          const data = await response.json();
+          if (!response.ok || !Array.isArray(data.results)) throw new Error('Search failed');
+          for (const item of data.results) {
+            let url;
+            try { url = new URL(item.url); } catch { continue; }
+            if (!['https:', 'http:'].includes(url.protocol) || seen.has(url.href)) continue;
+            seen.add(url.href);
+            const row = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = url.href;
+            link.textContent = item.title || url.hostname;
+            row.append(link);
+            if (item.description) {
+              const description = document.createElement('p');
+              description.textContent = item.description;
+              row.append(description);
+            }
+            results.append(row);
+          }
+          nextPage += 1;
+          more.hidden = !data.moreResultsAvailable || nextPage > 9;
+          status.textContent = seen.size ? seen.size + ' results for “' + query + '”.' : 'No results found.';
+        } catch (error) {
+          if (request.signal.aborted) return;
+          status.textContent = 'Search is unavailable right now. Please try again.';
+        } finally {
+          if (controller === request) { busy = false; more.disabled = false; }
+        }
+      }
+      form.addEventListener('submit', event => { event.preventDefault(); search(true); });
+      more.addEventListener('click', () => search(false));
+    })();
+  </script>
+  </main>
+</body>
+</html>
