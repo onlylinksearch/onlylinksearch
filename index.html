@@ -1,106 +1,132 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OnlyLinkSearch</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff; color: #111111; }
-    .home { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding-top: 20vh; }
-    h1 { font-size: 52px; margin: 0 0 8px; letter-spacing: -2px; }
-    .tagline { color: #666; margin-bottom: 30px; font-size: 16px; }
-    .search-box { width: min(620px, 90%); display: flex; gap: 10px; }
-    input { flex: 1; height: 52px; border: 1px solid #bbb; border-radius: 10px; padding: 0 18px; font-size: 17px; outline: none; }
-    input:focus { border-color: #333; }
-    button { height: 52px; padding: 0 24px; border: 0; border-radius: 10px; background: #111; color: white; font-size: 16px; cursor: pointer; }
-    .message { width: min(620px, 90%); margin-top: 25px; color: #666; line-height: 1.5; }
-    .footer { margin-top: auto; padding: 30px; color: #999; font-size: 13px; }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OnlyLinkSearch — Just search. Just links. No AI.</title>
+  <meta name="description" content="OnlyLinkSearch is a search engine built to send you to the source. No AI-generated answers. No chatbot. Just links.">
+  <meta property="og:title" content="OnlyLinkSearch">
+  <meta property="og:description" content="Just search. Just links. No AI.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="home">
-    <h1>OnlyLink</h1>
-    <div class="tagline">Just search. Just links. No AI.</div>
-    <form class="search-box" id="searchForm">
-      <input id="searchInput" type="search" placeholder="Search the web" autocomplete="off" required>
-      <button type="submit">Search</button>
-    </form>
-    <div class="message" id="message">
-      <div id="search-output" hidden>
-        <p id="search-status" role="status" aria-live="polite"></p>
-        <div id="search-results" aria-label="Website search results"></div>
-        <button id="more-results" type="button" hidden>Show more</button>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="OnlyLinkSearch home">
+      <img src="logo.svg" alt="" class="brand-mark">
+      <span>OnlyLinkSearch</span>
+    </a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">THE WEB. NOT A GENERATED ANSWER.</p>
+        <h1>Just search.<br>Just links.<br><span>No AI.</span></h1>
+        <p class="hero-copy">
+          Remember when searching the internet actually gave you the internet?
+          OnlyLinkSearch helps you find websites and sources in a growing collection:
+          reference sites, creators, forums and communities.
+        </p>
+
+        <form class="search-demo" id="site-search" role="search">
+          <label for="site-query" class="sr-only">Search the starter collection</label>
+          <input id="site-query" name="q" type="search" placeholder="Search 100 websites…" maxlength="200" required>
+          <button type="submit" aria-label="Search">⌕</button>
+        </form>
+        <p class="microcopy">Search names, descriptions and topics in our 100-site starter collection.</p>
+        <noscript><p>Enable JavaScript to search this collection.</p></noscript>
+        <div id="search-output" hidden>
+          <p id="search-status" role="status" aria-live="polite"></p>
+          <ul id="search-results" aria-label="Website search results"></ul>
+          <button id="more-results" class="primary-button" type="button" hidden>Show more</button>
+        </div>
       </div>
-    </div>
-    <div class="footer">OnlyLinkSearch</div>
+    </section>
+
+    <section class="statement section">
+      <div class="section-inner narrow">
+        <p class="section-kicker">WHY</p>
+        <h2>The internet should be more than one generated answer.</h2>
+        <p>
+          Search engines used to help you find information. Increasingly, they try to
+          answer for you. OnlyLinkSearch is being built differently.
+        </p>
+        <div class="three-beats">
+          <div><strong>You search.</strong></div>
+          <div><strong>We show links.</strong></div>
+          <div><strong>You decide.</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="source section">
+      <div class="section-inner">
+        <p class="section-kicker">THE POINT</p>
+        <h2>Find the source.</h2>
+        <p class="lead">
+          Instead of generating an answer from other people’s work, OnlyLinkSearch
+          is designed to send you to the people who actually made it.
+        </p>
+        <div class="cards">
+          <article class="card">
+            <h3>Real websites.</h3>
+            <p>Go directly to the page, publication, forum or creator.</p>
+          </article>
+          <article class="card">
+            <h3>Real sources.</h3>
+            <p>See where information came from instead of only seeing a summary.</p>
+          </article>
+          <article class="card">
+            <h3>Real choice.</h3>
+            <p>Compare sources and decide what you trust and what you want to read.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="split section">
+      <div class="section-inner split-grid">
+        <div>
+          <p class="section-kicker">NO</p>
+          <h2>What it won’t do.</h2>
+          <ul class="plain-list">
+            <li>AI-generated search answers</li>
+            <li>A chatbot taking over your results</li>
+            <li>Generated images mixed into search</li>
+            <li>Pretend one answer represents the whole internet</li>
+          </ul>
+        </div>
+        <div>
+          <p class="section-kicker">YES</p>
+          <h2>What it will do.</h2>
+          <ul class="plain-list">
+            <li>Search our starter website collection</li>
+            <li>Show relevant links</li>
+            <li>Help you find original sources</li>
+            <li>Get out of the way</li>
+          </ul>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script>
-    (() => {
-      const form = document.getElementById('searchForm');
-      const input = document.getElementById('searchInput');
-      const output = document.getElementById('search-output');
-      const status = document.getElementById('search-status');
-      const results = document.getElementById('search-results');
-      const more = document.getElementById('more-results');
-      let query = '', nextPage = 0, controller, busy = false;
-      const seen = new Set();
-      async function search(reset) {
-        if (!reset && busy) return;
-        if (reset) {
-          const value = input.value.trim();
-          if (!value) return;
-          controller?.abort();
-          query = value;
-          nextPage = 0;
-          seen.clear();
-          results.replaceChildren();
-          more.hidden = true;
-        }
-        const request = new AbortController();
-        controller = request;
-        busy = true;
-        more.disabled = true;
-        output.hidden = false;
-        status.textContent = 'Searching…';
-        try {
-          const response = await fetch('/api/search?' + new URLSearchParams({ q: query, page: nextPage }), { signal: request.signal });
-          const data = await response.json();
-          if (!response.ok || !Array.isArray(data.results)) throw new Error('Search failed');
-          for (const item of data.results) {
-            let url;
-            try { url = new URL(item.url); } catch { continue; }
-            if (!['https:', 'http:'].includes(url.protocol) || seen.has(url.href)) continue;
-            seen.add(url.href);
-            const row = document.createElement('div');
-            const link = document.createElement('a');
-            link.href = url.href;
-            link.textContent = item.title || url.hostname;
-            row.style.marginBottom = '24px';
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            row.append(link);
-            if (item.description) {
-              const description = document.createElement('p');
-              description.textContent = item.description;
-              row.append(description);
-            }
-            results.append(row);
-          }
-          nextPage += 1;
-          more.hidden = !data.moreResultsAvailable || nextPage > 9;
-          status.textContent = seen.size ? seen.size + ' results for “' + query + '”.' : 'No results found.';
-        } catch (error) {
-          if (request.signal.aborted) return;
-          status.textContent = 'Search is unavailable right now. Please try again.';
-        } finally {
-          if (controller === request) { busy = false; more.disabled = false; }
-        }
-      }
-      form.addEventListener('submit', event => { event.preventDefault(); search(true); });
-      more.addEventListener('click', () => search(false));
-    })();
-  </script>
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <strong>OnlyLinkSearch</strong>
+        <p>Just search. Just links. No AI.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy</a>
+        <span>© 2026 OnlyLinkSearch</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="sites.js" defer></script>
+  <script src="search.js" defer></script>
 </body>
 </html>
