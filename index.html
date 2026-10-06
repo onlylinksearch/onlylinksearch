@@ -1,224 +1,113 @@
-<!DOCTYPE html>
+Skip to content
+
+Find
+F
+
+Overview
+Deployments
+Logs
+Analytics
+Speed Insights
+Observability
+Firewall
+CDN
+Environment Variables
+Domains
+Connect
+Integrations
+Storage
+Flags
+Agent
+AI Gateway
+Sandboxes
+Workflows
+Images
+Usage
+Support
+Settings
+
+Avatar for onlylinksearch-7003
+onlylinksearch-7003
+
+
+Deployments
+GFNcXmPGU
+Source
+Deployment
+Logs
+Resources
+Source
+Open Graph
+Source
+Output
+index.html
+
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>OnlyLinkSearch</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #ffffff;
-      color: #111111;
-    }
-
-    .home {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 20vh;
-    }
-
-    h1 {
-      font-size: 52px;
-      margin: 0 0 8px;
-      letter-spacing: -2px;
-    }
-
-    .tagline {
-      color: #666;
-      margin-bottom: 30px;
-      font-size: 16px;
-    }
-
-    .search-box {
-      width: min(620px, 90%);
-      display: flex;
-      gap: 10px;
-    }
-
-    input {
-      flex: 1;
-      height: 52px;
-      border: 1px solid #bbb;
-      border-radius: 10px;
-      padding: 0 18px;
-      font-size: 17px;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #333;
-    }
-
-    button {
-      height: 52px;
-      padding: 0 24px;
-      border: 0;
-      border-radius: 10px;
-      background: #111;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .message {
-      width: min(620px, 90%);
-      margin-top: 25px;
-      color: #666;
-      line-height: 1.5;
-    }
-
-    .footer {
-      margin-top: auto;
-      padding: 30px;
-      color: #999;
-      font-size: 13px;
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OnlyLinkSearch — Just search. Just links. No AI.</title>
+  <meta name="description" content="OnlyLinkSearch is a search engine built to send you to the source. No AI-generated answers. No chatbot. Just links.">
+  <meta property="og:title" content="OnlyLinkSearch">
+  <meta property="og:description" content="Just search. Just links. No AI.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="OnlyLinkSearch home">
+      <img src="logo.svg" alt="" class="brand-mark">
+      <span>OnlyLinkSearch</span>
+    </a>
+    <a class="small-link" href="#early-access">Early Access</a>
+  </header>
 
-  <main class="home">
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">THE WEB. NOT A GENERATED ANSWER.</p>
+        <h1>Just search.<br>Just links.<br><span>No AI.</span></h1>
+        <p class="hero-copy">
+          Remember when searching the internet actually gave you the internet?
+          OnlyLinkSearch is being built to send you directly to websites, sources,
+          creators, forums, articles and communities.
+        </p>
 
-    <h1>OnlyLink</h1>
+        <form class="search-demo" id="site-search" role="search">
+          <label for="site-query" class="sr-only">Search the starter collection</label>
+          <input id="site-query" name="q" type="search" placeholder="Search 100 websites…" maxlength="200" required>
+          <button type="submit" aria-label="Search">⌕</button>
+        </form>
+        <p class="microcopy">Search names, descriptions and topics in our 100-site starter collection.</p>
+        <noscript><p>Enable JavaScript to search this collection.</p></noscript>
+        <div id="search-output" hidden>
+          <p id="search-status" role="status" aria-live="polite"></p>
+          <ul id="search-results" aria-label="Website search results"></ul>
+          <button id="more-results" class="primary-button" type="button" hidden>Show more</button>
+        </div>
 
-    <div class="tagline">
-      Just search. Just links. No AI.
-    </div>
+        <a class="primary-button" href="#early-access">Join Early Access</a>
+        <p class="microcopy">No spam. Just launch updates and access when it’s ready.</p>
+      </div>
+    </section>
 
-    <form class="search-box" id="searchForm">
-      <input
-        id="searchInput"
-        type="search"
-        placeholder="Search the web"
-        autocomplete="off"
-        required
-      >
+    <section class="statement section">
+      <div class="section-inner narrow">
+        <p class="section-kicker">WHY</p>
+        <h2>The internet should be more than one generated answer.</h2>
+        <p>
+          Search engines used to help you find information. Increasingly, they try to
+          answer for you. OnlyLinkSearch is being built differently.
+        </p>
+        <div class="three-beats">
+          <div><strong>You search.</strong></div>
+          <div><strong>We show links.</strong></div>
+          <div><strong>You decide.</strong></div>
+        </div>
+      </div>
+    </section>
+early-access – Deployment Overview
 
-      <button type="submit">
-        Search
-      </button>
-    </form>
-
-    <div class="message" id="message"></div>
-
-    <div class="footer">
-      OnlyLinkSearch
-    </div>
-
-  </main>
-
-<script>
-const form = document.getElementById("searchForm");
-const input = document.getElementById("searchInput");
-const message = document.getElementById("message");
-
-let currentQuery = "";
-let currentPage = 0;
-
-async function runSearch(query, page = 0, append = false) {
-  if (!append) {
-    message.textContent = "Searching...";
-  }
-
-  try {
-    const response = await fetch(
-      `/api/search?q=${encodeURIComponent(query)}&page=${page}`
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || "Search failed");
-    }
-
-    if (!append) {
-      message.innerHTML = "";
-    }
-
-    if (!data.results || data.results.length === 0) {
-      message.textContent = "No results found.";
-      return;
-    }
-
-    const resultsWrap = document.createElement("div");
-
-    data.results.forEach(result => {
-      const item = document.createElement("div");
-      item.style.marginBottom = "24px";
-
-      const link = document.createElement("a");
-      link.href = result.url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.textContent = result.title;
-
-      const url = document.createElement("div");
-      url.textContent = result.url;
-      url.style.fontSize = "13px";
-      url.style.opacity = "0.65";
-      url.style.wordBreak = "break-all";
-
-      const description = document.createElement("div");
-      description.textContent = result.description;
-      description.style.marginTop = "6px";
-
-      item.appendChild(link);
-      item.appendChild(url);
-      item.appendChild(description);
-
-      resultsWrap.appendChild(item);
-    });
-
-    message.appendChild(resultsWrap);
-
-    const oldButton = document.getElementById("loadMore");
-    if (oldButton) oldButton.remove();
-
-    if (data.moreResultsAvailable) {
-      const moreButton = document.createElement("button");
-      moreButton.id = "loadMore";
-      moreButton.type = "button";
-      moreButton.textContent = "Show more";
-
-      moreButton.addEventListener("click", async () => {
-        currentPage++;
-        moreButton.remove();
-        await runSearch(currentQuery, currentPage, true);
-      });
-
-      message.appendChild(moreButton);
-    }
-
-  } catch (error) {
-    message.textContent = "Search unavailable. Please try again.";
-    console.error(error);
-  }
-}
-
-form.addEventListener("submit", async function(event) {
-  event.preventDefault();
-
-  const query = input.value.trim();
-  if (!query) return;
-
-  currentQuery = query;
-  currentPage = 0;
-
-  await runSearch(query);
-});
-</script>
-
-
-
-</body>
-</html>
